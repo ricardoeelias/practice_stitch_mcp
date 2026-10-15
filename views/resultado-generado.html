@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Excusify - Resultado Generado</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#ffd9dc",
+            "surface-tint": "#653be0",
+            "surface-container-low": "#f8f1ff",
+            "surface": "#fdf7ff",
+            "on-error": "#ffffff",
+            "surface-container": "#f2ebff",
+            "inverse-on-surface": "#f5eeff",
+            "on-background": "#1d1732",
+            "on-tertiary-container": "#ffdde0",
+            "secondary-fixed-dim": "#ffb955",
+            "on-error-container": "#93000a",
+            "on-secondary-fixed-variant": "#633f00",
+            "error": "#ba1a1a",
+            "tertiary-container": "#c61c4c",
+            "secondary-container": "#ffb548",
+            "on-primary-fixed-variant": "#4c15c8",
+            "inverse-primary": "#ccbeff",
+            "surface-container-highest": "#e7deff",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#484455",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed": "#ffddb4",
+            "primary-fixed": "#e7deff",
+            "outline": "#797486",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "primary": "#5424cf",
+            "surface-container-high": "#ede4ff",
+            "secondary": "#835500",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#fdf7ff",
+            "on-secondary-fixed": "#291800",
+            "tertiary": "#9f0037",
+            "outline-variant": "#cac3d8",
+            "on-tertiary-fixed-variant": "#910031",
+            "primary-fixed-dim": "#ccbeff",
+            "on-primary-container": "#eae1ff",
+            "on-tertiary-fixed": "#400011",
+            "on-primary-fixed": "#1e0060",
+            "primary-container": "#6d45e8",
+            "tertiary-fixed-dim": "#ffb2ba",
+            "inverse-surface": "#332c48",
+            "background": "#fdf7ff",
+            "on-secondary-container": "#704800",
+            "surface-variant": "#e7deff",
+            "surface-dim": "#dfd5f9",
+            "on-surface": "#1d1732"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.25rem",
+            "margin-desktop": "3rem",
+            "margin": "1rem",
+            "margin-tablet": "2rem",
+            "space-xs": "0.25rem",
+            "gutter-desktop": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-lg": ["16px", { "lineHeight": "20px", "fontWeight": "700" }],
+            "headline-xl": ["44px", { "lineHeight": "52px", "fontWeight": "800" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-xl-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "800" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+            "label-md": ["14px", { "lineHeight": "18px", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(840px, 100dvh);
+    }
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-full flex flex-col font-body-md selection:bg-primary-fixed selection:text-primary">
+<!-- Feedback Toast (Hidden initially) -->
+<div class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] transition-all duration-300 opacity-0 pointer-events-none -translate-y-4" id="toast">
+<div class="bg-inverse-surface text-inverse-on-surface px-5 py-2.5 rounded-full shadow-[0_12px_32px_-4px_rgba(109,69,232,0.25)] flex items-center gap-2 border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary-fixed text-lg" data-icon="check_circle">check_circle</span>
+<span class="font-label-md text-label-md">¡Excusa copiada al portapapeles! 🚀</span>
+</div>
+</div>
+<!-- Shared Component: TopAppBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center w-full px-margin h-16 bg-surface-container-lowest dark:bg-surface border-b border-outline-variant/30 dark:border-outline/20 shadow-sm dark:shadow-none">
+<a href="../index.html" class="flex items-center gap-2 group" title="Volver a la portada del equipo">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white active:scale-95 transition-all duration-150">
+<span class="material-symbols-outlined text-2xl" data-icon="psychology_alt">psychology_alt</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-extrabold text-primary dark:text-inverse-primary tracking-tight">Excusify</span>
+<span class="text-[10px] text-on-surface-variant flex items-center gap-0.5">← Portada</span>
+</div>
+</a>
+<!-- Streak Badge & Sparkle -->
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5 bg-secondary-fixed/50 px-3 py-1 rounded-full border border-secondary-container/40">
+<span class="text-xs">🔥</span>
+<span class="text-label-sm font-label-sm text-on-secondary-fixed">5 días</span>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-surface-variant active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="auto_awesome">auto_awesome</span>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Canvas for Mobile -->
+<main class="flex-1 w-full max-w-md mx-auto px-margin pt-5 pb-28 flex flex-col gap-space-lg">
+<!-- Hero Humorístico -->
+<section class="flex flex-col items-center text-center px-1">
+<div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-surface-container-high text-primary border border-outline-variant/40 mb-3 shadow-xs">
+<span class="text-sm">🛡️</span>
+<span class="font-label-sm text-label-sm">Certificado de Indisposición Imprevista</span>
+</div>
+<h1 class="text-headline-xl-mobile font-headline-xl-mobile text-on-background tracking-till">
+        ¿Hoy tampoco puedes ir? <span class="inline-block transform hover:rotate-45 transition-transform cursor-pointer">🙃</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 px-1 text-balance">
+        El generador de pretextos científicamente indenostrables para cuando el universo conspira contra tus ganas de salir.
+      </p>
+</section>
+<!-- Generated Excuse Card -->
+<section class="flex flex-col items-center py-12">
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-dashed border-primary/30 shadow-[0_8px_24px_rgba(109,69,232,0.12),0_2px_6px_-1px_rgba(40,34,61,0.04)] max-w-md mx-auto w-full">
+<!-- Excuse Text -->
+<div class="text-center">
+<p class="font-headline-lg text-headline-lg text-on-background mb-2" id="generatedExcuseText">
+        "Interferencia satelital en el microondas: tu cena fue calentada por señales alienígenas y ahora sabe a chatarra interestelar."
+</p>
+<p class="text-body-sm text-on-surface-variant mb-8" id="resultCategoryPill">
+        Categoría: Vida cotidiana
+</p>
+</div>
+<!-- Absurdity Meter -->
+<div class="flex items-center justify-center gap-4 mb-8">
+<span class="text-4xl font-bold text-tertiary-container">5/5 🚨</span>
+<span class="text-xl text-on-surface-variant">Absurdidad Galáctica Máxima</span>
+</div>
+<!-- Sharing Buttons -->
+<div class="flex gap-3 justify-center">
+<button class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors" onclick="shareWhatsApp()">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors" onclick="copyGeneratedExcuse()">
+<span class="material-symbols-outlined text-xl" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Popular Excuses of the Week -->
+<section class="flex flex-col gap-3 px-4">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="text-lg">🔥</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Excusas más populares de la semana</h2>
+</div>
+<span class="text-label-sm font-label-sm text-primary cursor-pointer hover:underline">Ver top 50</span>
+</div>
+<!-- Bento Cards Collection -->
+<div class="flex flex-col gap-3">
+<!-- Popular Card 1 -->
+<article class="bg-surface-container-lowest rounded-3xl p-4 border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(109,69,232,0.08)] flex flex-col gap-2.5 transition-transform active:scale-[0.99]">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-surface-container-high text-primary">💼 Trabajo</span>
+<span class="text-xs font-label-sm text-secondary flex items-center gap-1">
+<span>Absurdo:</span>
+<span class="font-bold">4/5</span>
+</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-primary transition-colors flex-shrink-0" onclick="copyCardText(this, 'Mi gato cerró la laptop de un salto y ahora Windows está en ruso.')" title="Copiar excusa">
+<span class="material-symbols-outlined text-base" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">
+        "Mi gato cerró la laptop de un salto y ahora Windows está en ruso."
+</p>
+<div class="flex items-center justify-between text-xs text-on-surface-variant font-label-sm pt-1 border-t border-outline-variant/20">
+<span>Usada 1.4k veces</span>
+<span class="text-secondary-fixed-variant">⭐ 98% éxito</span>
+</div>
+</article>
+<!-- Popular Card 2 -->
+<article class="bg-surface-container-lowest rounded-3xl p-4 border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(109,69,232,0.08)] flex flex-col gap-2.5 transition-transform active:scale-[0.99]">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-surface-container-high text-primary">🛋️ Vida cotidiana</span>
+<span class="text-xs font-label-sm text-tertiary-container flex items-center gap-1">
+<span>Absurdo:</span>
+<span class="font-bold">5/5</span>
+</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-primary transition-colors flex-shrink-0" onclick="copyCardText(this, 'La gravedad en mi cama aumentó un 300% debido a una tormenta solar.')" title="Copiar excusa">
+<span class="material-symbols-outlined text-base" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">
+        "La gravedad en mi cama aumentó un 300% debido a una tormenta solar."
+</p>
+<div class="flex items-center justify-between text-xs text-on-surface-variant font-label-sm pt-1 border-t border-outline-variant/20">
+<span>Usada 2.8k veces</span>
+<span class="text-secondary-fixed-variant">⭐ 99% éxito</span>
+</div>
+</article>
+<!-- Popular Card 3 -->
+<article class="bg-surface-container-lowest rounded-3xl p-4 border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(109,69,232,0.08)] flex flex-col gap-2.5 transition-transform active:scale-[0.99]">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-surface-container-high text-primary">📚 Estudio</span>
+<span class="text-xs font-label-sm text-secondary-container flex items-center gap-1">
+<span>Absurdo:</span>
+<span class="font-bold">3/5</span>
+</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-primary transition-colors flex-shrink-0" onclick="copyCardText(this, 'Se me desconfiguró la noción del tiempo tras intentar entender derivadas.')" title="Copiar excusa">
+<span class="material-symbols-outlined text-base" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">
+        "Se me desconfiguró la noción del tiempo tras intentar entender derivadas."
+</p>
+<div class="flex items-center justify-between text-xs text-on-surface-variant font-label-sm pt-1 border-t border-outline-variant/20">
+<span>Usada 890 veces</span>
+<span class="text-secondary-fixed-variant">⭐ 92% éxito</span>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Shared Component: BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin py-2 pb-safe bg-surface-container-lowest dark:bg-surface shadow-[0_-4px_20px_-2px_rgba(109,69,232,0.08)] border-t border-outline-variant/30">
+<!-- Tab: Inicio (ACTIVO) -->
+<a href="inicio-generador.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary rounded-full px-4 py-1.5 shadow-sm active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined text-xl fill-icon" data-icon="home" data-weight="fill">home</span>
+<span class="text-label-sm font-label-sm">Inicio</span>
+</a>
+<!-- Tab: Resultado -->
+<a href="resultado-generado.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary rounded-full px-4 py-1.5 shadow-sm active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined text-xl fill-icon" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-sm font-label-sm">Resultado</span>
+</a>
+<!-- Tab: Crear -->
+<a href="crear-excusa.html" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary px-3 py-1.5 active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined text-xl" data-icon="add_circle">add_circle</span>
+<span class="text-label-sm font-label-sm">Crear</span>
+</a>
+<!-- Tab: Favoritas -->
+<a href="mis-favoritas.html" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary px-3 py-1.5 active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined text-xl" data-icon="bookmark">bookmark</span>
+<span class="text-label-sm font-label-sm">Favoritas</span>
+</a>
+<!-- Tab: Portada -->
+<a href="../index.html" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary px-3 py-1.5 active:scale-90 transition-transform duration-150" title="Volver a la portada del proyecto">
+<span class="material-symbols-outlined text-xl" data-icon="arrow_back">arrow_back</span>
+<span class="text-label-sm font-label-sm">Portada</span>
+</a>
+</nav>
+<!-- Inline Interaction Scripts -->
+<script>
+    let activeCategory = 'Todas';
+
+    const excuseDatabase = [
+      {
+        cat: 'Trabajo',
+        text: 'Mi gato cerró la laptop de un salto y ahora Windows está en ruso.',
+        absurd: '4/5'
+      },
+      {
+        cat: 'Trabajo',
+        text: 'Mi conexión a internet fue secuestrada por una actualización de microondas inteligente.',
+        absurd: '5/5'
+      },
+      {
+        cat: 'Estudio',
+        text: 'Se me desconfiguró la noción del tiempo tras intentar entender derivadas.',
+        absurd: '3/5'
+      },
+      {
+        cat: 'Estudio',
+        text: 'El PDF de la entrega mutó a formato jeroglífico tras exportarlo con prisas.',
+        absurd: '4/5'
+      },
+      {
+        cat: 'Vida cotidiana',
+        text: 'La gravedad en mi cama aumentó un 300% debido a una tormenta solar.',
+        absurd: '5/5'
+      },
+      {
+        cat: 'Vida cotidiana',
+        text: 'Salí a comprar perejil y acabé participando como testigo en una boda gitana.',
+        absurd: '4/5'
+      }
+    ];
+
+    function setCategory(el, cat) {
+      activeCategory = cat;
+      const chips = document.querySelectorAll('.category-chip');
+      chips.forEach(chip => {
+        chip.className = 'category-chip flex-shrink-0 px-4 py-2 rounded-full border text-label-md font-label-md flex items-center gap-1.5 transition-all duration-200 bg-surface-container-lowest text-on-surface-variant border-outline-variant hover:bg-surface-container-high';
+      });
+      el.className = 'category-chip flex-shrink-0 px-4 py-2 rounded-full border text-label-md font-label-md flex items-center gap-1.5 transition-all duration-200 bg-primary-container text-on-primary-container border-primary-container shadow-[0_4px_12px_rgba(109,69,232,0.24)]';
+    }
+
+    function generateRandomExcuse() {
+      const btn = document.getElementById('generateBtn');
+      btn.classList.add('scale-95');
+      setTimeout(() => btn.classList.remove('scale-95'), 150);
+
+      let pool = excuseDatabase;
+      if (activeCategory !== 'Todas') {
+        pool = excuseDatabase.filter(e => e.cat === activeCategory);
+        if (pool.length === 0) pool = excuseDatabase;
+      }
+
+      const randomItem = pool[Math.floor(Math.random() * pool.length)];
+
+      const emptyState = document.getElementById('emptyState');
+      const activeState = document.getElementById('activeState');
+      const excuseText = document.getElementById('generatedExcuseText');
+      const resultCat = document.getElementById('resultCategoryPill');
+      const resultAbsurd = document.getElementById('resultAbsurdMeter');
+      const stateBadge = document.getElementById('stateBadge');
+      const container = document.getElementById('excuseCardContainer');
+
+      emptyState.classList.add('hidden');
+      activeState.classList.remove('hidden');
+      activeState.classList.add('flex');
+
+      container.classList.remove('border-dashed', 'border-primary/30');
+      container.classList.add('border-solid', 'border-outline-variant/60');
+
+      excuseText.innerText = `"${randomItem.text}"`;
+      resultCat.innerText = randomItem.cat;
+      resultAbsurd.innerText = `${randomItem.absurd} 🚨`;
+      stateBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> Generada`;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (msg) {
+        toast.querySelector('span:last-child').textContent = msg;
+      }
+      toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2500);
+    }
+
+    function copyGeneratedExcuse() {
+      const text = document.getElementById('generatedExcuseText').innerText.replace(/^"|"$/g, '');
+      navigator.clipboard.writeText(text);
+      showToast('¡Excusa copiada al portapapeles! 🚀');
+    }
+
+    function copyCardText(btn, text) {
+      navigator.clipboard.writeText(text);
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const original = icon.textContent;
+      icon.textContent = 'check';
+      btn.classList.add('bg-primary-fixed', 'text-primary');
+      showToast('¡Excusa copiada! 🚀');
+      setTimeout(() => {
+        icon.textContent = original;
+        btn.classList.remove('bg-primary-fixed', 'text-primary');
+      }, 1500);
+    }
+
+    function shareWhatsApp() {
+      const text = document.getElementById('generatedExcuseText').innerText;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Oye, no voy a poder ir: ' + text)}`, '_blank');
+    }
+  </script>
+</body></html>
