@@ -166,15 +166,15 @@
           </div>
         </article>
 
-        <!-- Tarjeta 3: Crear Excusa -->
-        <article class="bg-surface rounded-3xl p-6 border border-outline shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-5">
+        <!-- Tarjeta 3: Crear Excusa (activa) -->
+        <article class="bg-surface rounded-3xl p-6 border-2 border-primary-container shadow-[0_8px_24px_rgba(109,69,232,0.12)] flex flex-col justify-between gap-5">
           <div class="flex items-start justify-between">
             <div class="w-12 h-12 rounded-2xl bg-surface-tonal flex items-center justify-center text-2xl">
               <span>✍️</span>
             </div>
-            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-tonal text-text-muted text-xs font-semibold">
-              <span class="material-symbols-outlined text-sm">hourglass_top</span>
-              <span>En Stitch</span>
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary-container text-white text-xs font-bold">
+              <span class="material-symbols-outlined text-sm">check_circle</span>
+              <span>Lista / Interactiva</span>
             </span>
           </div>
 
@@ -184,13 +184,16 @@
               <h3 class="text-xl font-bold text-text-main mt-0.5">Crear Excusa</h3>
             </div>
             <p class="text-sm text-text-muted leading-relaxed">
-              Formulario creativo de coartadas con selector de categoría, redacción libre, escala visual de absurdidad con emojis (1 al 5) y switch de publicación anónima.
+              Genera una excusa, agrega las tuyas para Trabajo o Estudio, y filtra las populares de la semana. Tus aportes se guardan en este navegador.
             </p>
           </div>
 
           <div class="pt-3 border-t border-outline flex items-center justify-between text-xs text-text-muted">
             <span class="font-mono">views/crear-excusa.html</span>
-            <span class="font-semibold text-primary-container">Próxima a importar</span>
+            <a href="views/crear-excusa.html" class="inline-flex items-center gap-1.5 text-sm font-bold text-primary-container hover:text-primary transition-colors">
+              <span>Abrir vista</span>
+              <span class="material-symbols-outlined text-base">arrow_forward</span>
+            </a>
           </div>
         </article>
 

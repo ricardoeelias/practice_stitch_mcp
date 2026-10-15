@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fdf7ff" />
+  <title>Excusify — Crear y descubrir excusas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light;
+      --primary: #5424cf;
+      --primary-container: #6d45e8;
+      --secondary: #ffb548;
+      --tertiary: #c61c4c;
+      --background: #fdf7ff;
+      --surface: #fff;
+      --surface-low: #f8f1ff;
+      --surface-container: #f2ebff;
+      --surface-high: #ede4ff;
+      --text: #1d1732;
+      --muted: #625b73;
+      --outline: #cac3d8;
+      --shadow: 0 8px 28px rgba(64, 42, 119, .09);
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--text); background: var(--background); }
+    button, input, textarea, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; }
+    .topbar { position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.94); border-bottom: 1px solid #e7e0ef; backdrop-filter: blur(14px); }
+    .topbar-inner { width: min(100% - 32px, 760px); min-height: 68px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; color: var(--primary); }
+    .brand-mark { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 15px; background: var(--surface-high); font-size: 22px; }
+    .brand small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 600; }
+    .back-link { padding: 9px 14px; border: 1px solid #e5deef; border-radius: 999px; color: var(--primary); font-size: 13px; font-weight: 700; }
+    .back-link:hover { background: var(--surface-low); }
+    main { width: min(100% - 32px, 540px); margin: 0 auto; padding: 26px 0 112px; }
+    .hero { text-align: center; margin: 4px 0 24px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid #e3daf3; border-radius: 999px; color: var(--primary); background: var(--surface-high); font-size: 11px; font-weight: 700; }
+    h1 { margin: 13px 0 8px; font-size: clamp(27px, 7vw, 36px); line-height: 1.15; letter-spacing: -.045em; }
+    .hero p { max-width: 440px; margin: auto; color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .section { margin-top: 21px; }
+    .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 0 2px 11px; }
+    .section-heading h2 { margin: 0; font-size: 17px; line-height: 1.35; letter-spacing: -.025em; }
+    .section-heading p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .count { flex: 0 0 auto; color: var(--primary); font-size: 11px; font-weight: 700; }
+    .filters { display: flex; gap: 8px; overflow-x: auto; padding: 2px 1px 7px; scrollbar-width: none; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; min-height: 40px; padding: 0 15px; border: 1px solid var(--outline); border-radius: 999px; background: var(--surface); color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 700; transition: .18s ease; }
+    .filter:hover { background: var(--surface-low); }
+    .filter[aria-pressed="true"] { border-color: var(--primary-container); color: #fff; background: var(--primary-container); box-shadow: 0 5px 14px rgba(109,69,232,.2); }
+    .panel { border: 1px solid #e8e0f2; border-radius: 25px; background: var(--surface); box-shadow: var(--shadow); }
+    .generator { padding: 17px; }
+    .generate-btn { position: relative; display: flex; width: 100%; min-height: 58px; align-items: center; justify-content: center; gap: 10px; overflow: hidden; border: 0; border-radius: 999px; color: #fff; background: linear-gradient(105deg, var(--primary-container), #8355e9 60%, var(--secondary)); box-shadow: 0 8px 22px rgba(109,69,232,.28); cursor: pointer; font-size: 15px; font-weight: 800; letter-spacing: .025em; transition: transform .15s ease, box-shadow .15s ease; }
+    .generate-btn:hover { box-shadow: 0 12px 26px rgba(109,69,232,.35); transform: translateY(-1px); }
+    .generate-btn:active { transform: scale(.98); }
+    .generate-btn:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid #b9a4ff; outline-offset: 3px; }
+    .subline { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 13px; padding: 11px 13px; border: 1px solid #e7e0ef; border-radius: 16px; background: var(--surface-low); color: var(--muted); font-size: 12px; }
+    .switch { position: relative; width: 44px; height: 25px; flex: 0 0 auto; }
+    .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .switch-track { position: absolute; inset: 0; border-radius: 99px; background: #b8b1c7; cursor: pointer; transition: .2s; }
+    .switch-track::after { position: absolute; top: 3px; left: 3px; width: 19px; height: 19px; border-radius: 50%; background: white; content: ""; transition: .2s; }
+    .switch input:checked + .switch-track { background: var(--primary-container); }
+    .switch input:checked + .switch-track::after { transform: translateX(19px); }
+    .result-wrap { margin-top: 16px; }
+    .result-label { display: flex; justify-content: space-between; align-items: center; margin: 0 3px 8px; font-size: 13px; font-weight: 700; }
+    .status { color: var(--muted); font-size: 11px; font-weight: 600; }
+    .result-card { min-height: 160px; padding: 19px; border: 1px dashed #ae98e8; border-radius: 23px; background: linear-gradient(145deg, #fff, #fcf9ff); }
+    .result-empty { display: grid; min-height: 120px; place-items: center; align-content: center; text-align: center; }
+    .result-empty .sparkle { display: grid; width: 51px; height: 51px; place-items: center; margin-bottom: 10px; border-radius: 18px; background: var(--surface-container); font-size: 26px; }
+    .result-empty strong { font-size: 15px; }
+    .result-empty p { max-width: 310px; margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .result-content[hidden], .result-empty[hidden] { display: none; }
+    .result-top, .result-actions, .meta-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .tag { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px; background: var(--surface-high); color: var(--primary); font-size: 11px; font-weight: 700; }
+    .absurdity { color: var(--tertiary); font-size: 11px; font-weight: 700; }
+    .quote { position: relative; margin: 14px 0; padding: 17px; border: 1px solid #eee8f6; border-radius: 18px; background: var(--surface-low); font-size: 17px; font-weight: 700; line-height: 1.5; }
+    .result-actions small { color: var(--muted); font-size: 10px; }
+    .button-row { display: flex; gap: 8px; }
+    .icon-btn, .small-btn { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; gap: 6px; padding: 0 12px; border: 1px solid #e4dcef; border-radius: 999px; background: var(--surface); color: var(--primary); cursor: pointer; font-size: 12px; font-weight: 700; }
+    .icon-btn:hover, .small-btn:hover { background: var(--surface-low); }
+    .form-card { padding: 18px; }
+    .field { margin-top: 14px; }
+    .field label, .field-label { display: block; margin: 0 0 7px; font-size: 12px; font-weight: 700; }
+    .field textarea, .field select { width: 100%; border: 1px solid #d8d0e5; border-radius: 14px; background: #fff; color: var(--text); }
+    .field textarea { min-height: 106px; padding: 13px 14px; resize: vertical; line-height: 1.5; }
+    .field select { min-height: 46px; padding: 0 12px; }
+    .field textarea::placeholder { color: #898397; }
+    .hint { display: flex; justify-content: space-between; gap: 10px; margin-top: 6px; color: var(--muted); font-size: 10px; }
+    .rating { display: flex; flex-wrap: wrap; gap: 7px; }
+    .rating button { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #e4dcef; border-radius: 14px; background: var(--surface-low); cursor: pointer; font-size: 19px; transition: .15s; }
+    .rating button[aria-pressed="true"] { border-color: var(--primary); background: var(--surface-high); transform: translateY(-2px); }
+    .publish-row { display: flex; align-items: flex-start; gap: 10px; margin: 15px 0; padding: 12px; border-radius: 15px; background: var(--surface-low); }
+    .publish-row input { width: 17px; height: 17px; margin: 1px 0 0; accent-color: var(--primary); }
+    .publish-row label { cursor: pointer; }
+    .publish-row strong { display: block; font-size: 12px; }
+    .publish-row small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .submit-btn { width: 100%; min-height: 48px; border: 0; border-radius: 999px; color: #fff; background: var(--primary-container); box-shadow: 0 6px 16px rgba(109,69,232,.2); cursor: pointer; font-size: 13px; font-weight: 800; }
+    .submit-btn:hover { background: var(--primary); }
+    .popular-list { display: grid; gap: 11px; }
+    .excuse-card { padding: 15px; border: 1px solid #e8e0f2; border-radius: 21px; background: var(--surface); box-shadow: 0 4px 17px rgba(64,42,119,.06); }
+    .excuse-card p { margin: 10px 0 12px; font-size: 14px; font-weight: 700; line-height: 1.55; }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .card-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .card-meta { padding-top: 10px; border-top: 1px solid #f0ebf5; color: var(--muted); font-size: 10px; }
+    .remove-btn { padding: 5px 8px; border: 0; border-radius: 99px; background: transparent; color: #8b5263; cursor: pointer; font-size: 11px; font-weight: 700; }
+    .remove-btn:hover { background: #fff0f2; }
+    .empty-list { padding: 22px 16px; border: 1px dashed #cfc4e1; border-radius: 20px; color: var(--muted); background: rgba(255,255,255,.7); text-align: center; font-size: 12px; line-height: 1.6; }
+    .privacy-tag { color: #5b526c; background: #f2eff6; }
+    .toast { position: fixed; z-index: 10; top: 14px; left: 50%; max-width: calc(100% - 28px); padding: 11px 17px; border: 1px solid rgba(255,255,255,.14); border-radius: 99px; color: #fff; background: #332c48; box-shadow: 0 10px 30px rgba(35,23,66,.24); font-size: 12px; font-weight: 700; opacity: 0; pointer-events: none; transform: translate(-50%, -12px); transition: .2s; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .bottom-nav { position: fixed; z-index: 4; right: 0; bottom: 0; left: 0; display: flex; justify-content: center; gap: 7px; padding: 9px 10px max(9px, env(safe-area-inset-bottom)); border-top: 1px solid #e7e0ef; background: rgba(255,255,255,.96); box-shadow: 0 -5px 18px rgba(64,42,119,.06); backdrop-filter: blur(14px); }
+    .bottom-nav a { display: flex; min-width: 70px; flex-direction: column; align-items: center; gap: 3px; padding: 7px 10px; border-radius: 999px; color: var(--muted); font-size: 10px; font-weight: 700; }
+    .bottom-nav a span:first-child { font-size: 17px; }
+    .bottom-nav a[aria-current="page"] { color: #fff; background: var(--primary-container); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (min-width: 700px) {
+      main { width: min(100% - 48px, 650px); padding-top: 36px; }
+      .panel { border-radius: 28px; }
+      .generator, .form-card { padding: 22px; }
+      .bottom-nav a { min-width: 94px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" aria-label="Excusify, volver a la portada">
+        <span class="brand-mark" aria-hidden="true">🛡️</span>
+        <span>Excusify<small>Playful Engine · <span aria-hidden="true">←</span> Portada</small></span>
+      </a>
+      <a class="back-link" href="inicio-generador.html">← Inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <span class="eyebrow"><span aria-hidden="true">✨</span> Certificado de Indisposición Imprevista</span>
+      <h1 id="page-title">¿Hoy tampoco puedes ir? 🙃</h1>
+      <p>Inventa una coartada memorable o aporta la tuya al repertorio de Excusify. La ciencia no ha confirmado ninguna.</p>
+    </section>
+
+    <section class="section" aria-labelledby="filter-title">
+      <div class="section-heading">
+        <div><h2 id="filter-title">Elige tu campo de batalla</h2><p>El filtro aplica al generador y al ranking semanal.</p></div>
+        <span class="count" id="filterSummary">Todas</span>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar por categoría">
+        <button class="filter" type="button" data-category="Todas" aria-pressed="true"><span aria-hidden="true">🔥</span> Todas</button>
+        <button class="filter" type="button" data-category="Trabajo" aria-pressed="false"><span aria-hidden="true">💼</span> Trabajo</button>
+        <button class="filter" type="button" data-category="Estudio" aria-pressed="false"><span aria-hidden="true">📚</span> Estudio</button>
+      </div>
+    </section>
+
+    <section class="section panel generator" aria-label="Generador de excusas">
+      <button class="generate-btn" id="generateBtn" type="button"><span aria-hidden="true">✨</span> ¡INVENTA MI EXCUSA! <span aria-hidden="true">🎲</span></button>
+      <div class="subline">
+        <span><span aria-hidden="true">🌪️</span> Modo hiperbólico</span>
+        <label class="switch"><span class="sr-only">Activar modo hiperbólico</span><input id="hyperbolicToggle" type="checkbox" checked /><span class="switch-track"></span></label>
+      </div>
+      <div class="result-wrap" aria-live="polite">
+        <div class="result-label"><span>Tu pretexto oficial</span><span class="status" id="resultStatus">● En espera</span></div>
+        <div class="result-card">
+          <div class="result-empty" id="emptyResult">
+            <span class="sparkle" aria-hidden="true">✨</span>
+            <strong>Silencio administrativo</strong>
+            <p>Pulsa el botón mágico para salvarte el día. Hay excusas listas para cualquier emergencia social.</p>
+          </div>
+          <div class="result-content" id="generatedResult" hidden>
+            <div class="result-top"><span class="tag" id="resultCategory">💼 Trabajo</span><span class="absurdity" id="resultAbsurdity">Absurdo: 4/5 🚨</span></div>
+            <p class="quote" id="resultText"></p>
+            <div class="result-actions">
+              <small>Efectividad estimada: <strong id="resultSuccess">94%</strong></small>
+              <div class="button-row"><button class="icon-btn" id="shareBtn" type="button" aria-label="Compartir por WhatsApp">↗ Compartir</button><button class="icon-btn" id="copyResultBtn" type="button">▢ Copiar</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="form-title">
+      <div class="section-heading"><div><h2 id="form-title">Aporta tu creatividad ✍️</h2><p>Agrega una excusa de Trabajo o Estudio a tu colección.</p></div></div>
+      <form class="panel form-card" id="excuseForm">
+        <div class="field">
+          <label for="excuseInput">Redacta tu excusa</label>
+          <textarea id="excuseInput" name="excuse" maxlength="220" required placeholder="Ej.: Mi calendario y yo estamos en una diferencia horaria irreconciliable…"></textarea>
+          <div class="hint"><span>Hazla breve, ingeniosa y memorable.</span><span id="charCount">0/220</span></div>
+        </div>
+        <div class="field">
+          <label for="excuseCategory">Categoría</label>
+          <select id="excuseCategory" name="category" required>
+            <option value="Trabajo">💼 Trabajo</option>
+            <option value="Estudio">📚 Estudio</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="field-label" id="ratingLabel">Nivel de absurdidad</span>
+          <div class="rating" role="group" aria-labelledby="ratingLabel">
+            <button type="button" data-rating="1" aria-label="1 de 5: discreta" aria-pressed="false">🙂</button>
+            <button type="button" data-rating="2" aria-label="2 de 5" aria-pressed="false">😅</button>
+            <button type="button" data-rating="3" aria-label="3 de 5" aria-pressed="false">🤨</button>
+            <button type="button" data-rating="4" aria-label="4 de 5" aria-pressed="false">🤯</button>
+            <button type="button" data-rating="5" aria-label="5 de 5: completamente absurda" aria-pressed="true">🚨</button>
+          </div>
+        </div>
+        <div class="publish-row">
+          <input id="publishToggle" type="checkbox" checked />
+          <label for="publishToggle"><strong>Compartir en las populares de la semana</strong><small>Si lo activas, la excusa aparecerá en el ranking de su categoría y en “Todas”.</small></label>
+        </div>
+        <button class="submit-btn" type="submit">＋ Agregar excusa</button>
+      </form>
+    </section>
+
+    <section class="section" aria-labelledby="popularTitle">
+      <div class="section-heading">
+        <div><h2 id="popularTitle">🔥 Excusas más populares de la semana</h2><p id="popularSubtitle">Las favoritas de la comunidad esta semana.</p></div>
+        <span class="count" id="popularCount">0 excusas</span>
+      </div>
+      <div class="popular-list" id="popularList" aria-live="polite"></div>
+    </section>
+
+    <section class="section" aria-labelledby="myExcusesTitle">
+      <div class="section-heading">
+        <div><h2 id="myExcusesTitle">Tus excusas guardadas</h2><p>Se conservan en este navegador y puedes quitarlas cuando quieras.</p></div>
+        <span class="count" id="myExcusesCount">0 excusas</span>
+      </div>
+      <div class="popular-list" id="customList" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Navegación principal">
+    <a href="inicio-generador.html"><span aria-hidden="true">⌂</span><span>Inicio</span></a>
+    <a href="crear-excusa.html" aria-current="page"><span aria-hidden="true">＋</span><span>Crear</span></a>
+    <a href="../index.html"><span aria-hidden="true">↩</span><span>Portada</span></a>
+  </nav>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const STORAGE_KEY = 'excusify.customExcuses.v1';
+      const seededExcuses = [
+        { id: 'seed-work-1', category: 'Trabajo', text: 'Mi gato cerró la laptop de un salto y ahora Windows está en ruso.', absurdity: 4, success: 98, uses: 1400 },
+        { id: 'seed-work-2', category: 'Trabajo', text: 'Mi conexión a internet fue secuestrada por una actualización de microondas inteligente.', absurdity: 5, success: 96, uses: 1120 },
+        { id: 'seed-work-3', category: 'Trabajo', text: 'La impresora entró en una negociación sindical y rechazó imprimir mis pendientes.', absurdity: 3, success: 91, uses: 760 },
+        { id: 'seed-study-1', category: 'Estudio', text: 'Se me desconfiguró la noción del tiempo tras intentar entender derivadas.', absurdity: 3, success: 92, uses: 890 },
+        { id: 'seed-study-2', category: 'Estudio', text: 'El PDF de la entrega mutó a formato jeroglífico tras exportarlo con prisas.', absurdity: 4, success: 95, uses: 680 },
+        { id: 'seed-study-3', category: 'Estudio', text: 'Mi cuaderno pidió una prórroga para procesar la cantidad de apuntes.', absurdity: 2, success: 88, uses: 520 }
+      ];
+
+      let activeCategory = 'Todas';
+      let selectedRating = 5;
+      let toastTimer;
+      let customExcuses = loadExcuses();
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+      function loadExcuses() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+          return Array.isArray(saved) ? saved.filter(item => item && typeof item.text === 'string' && ['Trabajo', 'Estudio'].includes(item.category)) : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveExcuses() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(customExcuses));
+          return true;
+        } catch (error) {
+          showToast('No se pudo guardar en este navegador.');
+          return false;
+        }
+      }
+
+      function allExcuses() {
+        return seededExcuses.concat(customExcuses);
+      }
+
+      function visibleByCategory(items) {
+        return activeCategory === 'Todas' ? items : items.filter(item => item.category === activeCategory);
+      }
+
+      function categoryIcon(category) {
+        return category === 'Trabajo' ? '💼' : '📚';
+      }
+
+      function showToast(message) {
+        const toast = $('#toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2400);
+      }
+
+      function updatePopular() {
+        const popular = visibleByCategory(allExcuses().filter(item => item.popular !== false))
+          .sort((a, b) => (Number(b.uses) || 0) - (Number(a.uses) || 0));
+        const list = $('#popularList');
+        $('#popularCount').textContent = `${popular.length} ${popular.length === 1 ? 'excusa' : 'excusas'}`;
+        $('#popularSubtitle').textContent = activeCategory === 'Todas'
+          ? 'Las favoritas de Trabajo y Estudio esta semana.'
+          : `Las favoritas de ${activeCategory} esta semana.`;
+
+        if (!popular.length) {
+          list.innerHTML = '<div class="empty-list">Todavía no hay excusas populares en esta categoría. ¡Agrega una y comparte tu creatividad!</div>';
+          return;
+        }
+
+        list.innerHTML = popular.map(item => {
+          const owned = customExcuses.some(custom => custom.id === item.id);
+          const uses = Number(item.uses) || 0;
+          const usageLabel = uses >= 1000 ? `${(uses / 1000).toFixed(1).replace('.0', '')}k` : String(uses);
+          return `<article class="excuse-card">
+            <div class="card-top"><div class="card-tags"><span class="tag">${categoryIcon(item.category)} ${item.category}</span><span class="absurdity">Absurdo: ${item.absurdity || 5}/5</span></div>
+              <button class="small-btn copy-card" type="button" data-id="${escapeAttribute(item.id)}" aria-label="Copiar excusa">▢ Copiar</button></div>
+            <p>${escapeHTML(item.text)}</p>
+            <div class="meta-row card-meta"><span>Usada ${usageLabel} veces</span><span>⭐ ${item.success || 94}% éxito</span>${owned ? `<button class="remove-btn" type="button" data-remove="${escapeAttribute(item.id)}">Quitar</button>` : ''}</div>
+          </article>`;
+        }).join('');
+      }
+
+      function updateCustomList() {
+        const saved = visibleByCategory(customExcuses).slice().sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+        const list = $('#customList');
+        $('#myExcusesCount').textContent = `${saved.length} ${saved.length === 1 ? 'excusa' : 'excusas'}`;
+        if (!saved.length) {
+          list.innerHTML = `<div class="empty-list">${activeCategory === 'Todas' ? 'Todavía no has agregado excusas. Usa el formulario para crear la primera.' : `No tienes excusas guardadas en ${activeCategory}.`}</div>`;
+          return;
+        }
+        list.innerHTML = saved.map(item => `<article class="excuse-card">
+          <div class="card-top"><div class="card-tags"><span class="tag">${categoryIcon(item.category)} ${item.category}</span><span class="tag privacy-tag">${item.popular === false ? '🔒 Solo para ti' : '🔥 En populares'}</span></div>
+            <button class="small-btn copy-card" type="button" data-id="${escapeAttribute(item.id)}">▢ Copiar</button></div>
+          <p>${escapeHTML(item.text)}</p>
+          <div class="meta-row card-meta"><span>Absurdo: ${item.absurdity || 5}/5</span><button class="remove-btn" type="button" data-remove="${escapeAttribute(item.id)}">Quitar</button></div>
+        </article>`).join('');
+      }
+
+      function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+      }
+
+      function escapeAttribute(value) {
+        return escapeHTML(value).replace(/`/g, '&#96;');
+      }
+
+      function setCategory(category) {
+        activeCategory = category;
+        $$('.filter').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
+        $('#filterSummary').textContent = category;
+        updatePopular();
+        updateCustomList();
+        const current = $('#resultText').dataset.category;
+        if (current && category !== 'Todas' && current !== category) {
+          $('#resultStatus').textContent = '● Cambió el filtro';
+        }
+      }
+
+      function generateExcuse() {
+        const pool = visibleByCategory(allExcuses());
+        if (!pool.length) {
+          showToast('No hay excusas para esta categoría. Agrega una primero.');
+          return;
+        }
+        const item = pool[Math.floor(Math.random() * pool.length)];
+        const hyperbolic = $('#hyperbolicToggle').checked;
+        let text = item.text;
+        if (hyperbolic && !item.id.startsWith('seed-')) text = `${text.replace(/[.!?…]+$/, '')} ¡y el universo todavía no presenta disculpas!`;
+        $('#emptyResult').hidden = true;
+        $('#generatedResult').hidden = false;
+        $('#resultText').textContent = `“${text}”`;
+        $('#resultText').dataset.category = item.category;
+        $('#resultCategory').textContent = `${categoryIcon(item.category)} ${item.category}`;
+        $('#resultAbsurdity').textContent = `Absurdo: ${item.absurdity || 5}/5 🚨`;
+        $('#resultSuccess').textContent = `${item.success || 94}%`;
+        $('#resultStatus').textContent = '● Generada';
+        $('#generateBtn').animate([{ transform: 'scale(.97)' }, { transform: 'scale(1)' }], { duration: 180, easing: 'ease-out' });
+      }
+
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (error) {
+          const temp = document.createElement('textarea');
+          temp.value = text;
+          temp.style.position = 'fixed';
+          temp.style.opacity = '0';
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          temp.remove();
+        }
+        showToast('¡Excusa copiada al portapapeles! 🚀');
+      }
+
+      function addExcuse(event) {
+        event.preventDefault();
+        const field = $('#excuseInput');
+        const text = field.value.trim();
+        if (text.length < 8) {
+          field.setCustomValidity('Escribe una excusa de al menos 8 caracteres.');
+          field.reportValidity();
+          return;
+        }
+        field.setCustomValidity('');
+        const category = $('#excuseCategory').value;
+        const newExcuse = {
+          id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          category,
+          text,
+          absurdity: selectedRating,
+          success: Math.floor(80 + Math.random() * 19),
+          uses: 0,
+          popular: $('#publishToggle').checked,
+          createdAt: new Date().toISOString()
+        };
+        customExcuses.unshift(newExcuse);
+        saveExcuses();
+        event.currentTarget.reset();
+        selectedRating = 5;
+        $$('.rating button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.rating === '5')));
+        $('#charCount').textContent = '0/220';
+        updatePopular();
+        updateCustomList();
+        showToast(newExcuse.popular ? '¡Excusa agregada al ranking semanal! ✨' : '¡Excusa guardada en tu colección! ✨');
+        if (activeCategory === 'Todas' || activeCategory === category) {
+          $('#resultText').dataset.category = '';
+        }
+      }
+
+      $('#generateBtn').addEventListener('click', generateExcuse);
+      $$('.filter').forEach(button => button.addEventListener('click', () => setCategory(button.dataset.category)));
+      $('#excuseForm').addEventListener('submit', addExcuse);
+      $('#excuseInput').addEventListener('input', event => {
+        $('#charCount').textContent = `${event.currentTarget.value.length}/220`;
+        event.currentTarget.setCustomValidity('');
+      });
+      $$('.rating button').forEach(button => button.addEventListener('click', () => {
+        selectedRating = Number(button.dataset.rating);
+        $$('.rating button').forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+      }));
+      $('#copyResultBtn').addEventListener('click', () => {
+        if (!$('#generatedResult').hidden) copyText($('#resultText').textContent.replace(/^“|”$/g, ''));
+      });
+      $('#shareBtn').addEventListener('click', () => {
+        if ($('#generatedResult').hidden) return;
+        const text = `Oye, no voy a poder ir: ${$('#resultText').textContent}`;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+      });
+      function handleListAction(event) {
+        const copyButton = event.target.closest('.copy-card');
+        if (copyButton) {
+          const item = allExcuses().find(excuse => excuse.id === copyButton.dataset.id);
+          if (item) copyText(item.text);
+          return;
+        }
+        const removeButton = event.target.closest('[data-remove]');
+        if (removeButton) {
+          customExcuses = customExcuses.filter(item => item.id !== removeButton.dataset.remove);
+          saveExcuses();
+          updatePopular();
+          updateCustomList();
+          showToast('Excusa quitada de tu colección.');
+        }
+      }
+      $('#popularList').addEventListener('click', handleListAction);
+      $('#customList').addEventListener('click', handleListAction);
+
+      updatePopular();
+      updateCustomList();
+    })();
+  </script>
+</body>
+</html>
