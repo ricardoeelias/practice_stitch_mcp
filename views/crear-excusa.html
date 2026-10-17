@@ -116,7 +116,7 @@
     .toast { position: fixed; z-index: 10; top: 14px; left: 50%; max-width: calc(100% - 28px); padding: 11px 17px; border: 1px solid rgba(255,255,255,.14); border-radius: 99px; color: #fff; background: #332c48; box-shadow: 0 10px 30px rgba(35,23,66,.24); font-size: 12px; font-weight: 700; opacity: 0; pointer-events: none; transform: translate(-50%, -12px); transition: .2s; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
     .bottom-nav { position: fixed; z-index: 4; right: 0; bottom: 0; left: 0; display: flex; justify-content: center; gap: 7px; padding: 9px 10px max(9px, env(safe-area-inset-bottom)); border-top: 1px solid #e7e0ef; background: rgba(255,255,255,.96); box-shadow: 0 -5px 18px rgba(64,42,119,.06); backdrop-filter: blur(14px); }
-    .bottom-nav a { display: flex; min-width: 70px; flex-direction: column; align-items: center; gap: 3px; padding: 7px 10px; border-radius: 999px; color: var(--muted); font-size: 10px; font-weight: 700; }
+    .bottom-nav a { display: flex; min-width: 0; flex: 1; max-width: 110px; flex-direction: column; align-items: center; gap: 3px; padding: 7px 10px; border-radius: 999px; color: var(--muted); font-size: 10px; font-weight: 700; }
     .bottom-nav a span:first-child { font-size: 17px; }
     .bottom-nav a[aria-current="page"] { color: #fff; background: var(--primary-container); }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
@@ -124,7 +124,7 @@
       main { width: min(100% - 48px, 650px); padding-top: 36px; }
       .panel { border-radius: 28px; }
       .generator, .form-card { padding: 22px; }
-      .bottom-nav a { min-width: 94px; }
+      .bottom-nav a { min-width: 0; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
   </style>
@@ -238,6 +238,8 @@
 
   <nav class="bottom-nav" aria-label="Navegación principal">
     <a href="inicio-generador.html"><span aria-hidden="true">⌂</span><span>Inicio</span></a>
+    <a href="resultado-generado.html"><span aria-hidden="true">✨</span><span>Resultado</span></a>
+    <a href="mis-favoritas.html"><span aria-hidden="true">☆</span><span>Favoritas</span></a>
     <a href="crear-excusa.html" aria-current="page"><span aria-hidden="true">＋</span><span>Crear</span></a>
     <a href="../index.html"><span aria-hidden="true">↩</span><span>Portada</span></a>
   </nav>
@@ -425,7 +427,7 @@
           createdAt: new Date().toISOString()
         };
         customExcuses.unshift(newExcuse);
-        saveExcuses();
+        if (!saveExcuses()) { customExcuses.shift(); return; }
         event.currentTarget.reset();
         selectedRating = 5;
         $$('.rating button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.rating === '5')));
@@ -480,5 +482,6 @@
       updateCustomList();
     })();
   </script>
+<script src="js/favoritas.js"></script>
 </body>
 </html>
