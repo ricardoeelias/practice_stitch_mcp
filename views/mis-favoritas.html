@@ -145,7 +145,8 @@
       min-height: max(884px, 100dvh);
     }
   </style>
-  </head>
+  <link rel="stylesheet" href="css/navegacion.css">
+</head>
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 <header class="sticky top-0 bg-white border-b border-outline-variant px-5 h-16 flex justify-between items-center">
 <a class="text-primary font-bold text-xl" href="../index.html">♧ Excusify <span class="text-xs">← Portada</span>
@@ -183,12 +184,12 @@
 </aside>
 <noscript>Activa JavaScript para gestionar tus favoritas.</noscript>
 </main>
-<nav aria-label="Navegación principal" class="fixed bottom-0 left-0 w-full bg-white border-t border-outline-variant flex justify-around py-3 text-label-sm">
-<a href="inicio-generador.html" class="text-primary p-2">Inicio</a>
-<a href="resultado-generado.html" class="text-primary p-2">Resultado</a>
-<a href="crear-excusa.html" class="text-primary p-2">Crear</a>
-<a href="mis-favoritas.html" aria-current="page" class="text-primary p-2">Favoritas</a>
-<a class="text-primary p-2" href="../index.html">Portada</a>
+<nav class="app-nav" aria-label="Navegaci?n principal">
+  <a href="inicio-generador.html"><span class="material-symbols-outlined" aria-hidden="true">home</span><span>Inicio</span></a>
+  <a href="resultado-generado.html"><span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span><span>Resultado</span></a>
+  <a href="crear-excusa.html"><span class="material-symbols-outlined" aria-hidden="true">add_circle</span><span>Crear</span></a>
+  <a href="mis-favoritas.html" aria-current="page"><span class="material-symbols-outlined" aria-hidden="true">bookmark</span><span>Favoritas</span></a>
+  <a href="../index.html"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span>Portada</span></a>
 </nav>
 <template id="favoriteTemplate">
 <article class="excuse-card bg-surface-container-lowest rounded-3xl p-5 border border-outline-variant/50 card-shadow transition-all duration-200 relative flex flex-col gap-3.5 hover:border-primary/40" data-cat="cotidiana">
