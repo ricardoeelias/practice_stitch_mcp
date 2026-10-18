@@ -1,0 +1,7 @@
+#toast { width: max-content; max-width: calc(100% - 2rem); }
+.result-meter > :first-child { flex-shrink: 0; }
+@media (max-width: 359px) {
+  .result-meter { flex-wrap: wrap; }
+  .generated-card { padding: 1.25rem; }
+  .generated-card #generatedExcuseText { font-size: 1.75rem; line-height: 1.3; }
+}

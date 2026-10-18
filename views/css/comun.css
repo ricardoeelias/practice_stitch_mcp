@@ -1,0 +1,64 @@
+/* Componentes compartidos; independientes de Tailwind y compatibles con file://. */
+:root {
+  --nav-primary: #5424cf;
+  --nav-active: #6d45e8;
+  --nav-text: #484455;
+  --focus-color: #835500;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { min-height: 100vh; min-height: 100dvh; }
+main { overflow-wrap: anywhere; }
+main :where(.flex > *, .result-top > *, .result-actions > *) { min-width: 0; }
+button:focus-visible, a:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined.fill-icon {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.no-scrollbar, .hide-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar, .hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Estilos antes creados mediante JavaScript en favoritas.js. */
+.favorites-notice {
+  position: fixed;
+  top: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: #332c48;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 24px;
+  max-width: 90vw;
+  overflow-wrap: anywhere;
+}
+.save-favorite {
+  background: #e7deff;
+  color: #4c15c8;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 24px;
+  font: inherit;
+  cursor: pointer;
+  margin-top: 12px;
+}
+.clipboard-field { position: fixed; opacity: 0; }
+body:has(.app-nav) main {
+  padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

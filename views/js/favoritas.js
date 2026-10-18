@@ -1,23 +1,59 @@
 (function () {
   'use strict';
   const KEY = 'excusify.favorites.v1';
+  const CUSTOM_KEY = 'excusify.customExcuses.v1';
+  const DISMISSED_KEY = 'excusify.dismissedCustomFavorites.v1';
   const categories = ['Trabajo', 'Estudio', 'Vida cotidiana'];
-  function read() {
+  let refresh = () => {};
+  const identity = item => JSON.stringify([item.category, item.text.trim()]);
+  function readRecords(key) {
     try {
-      const data = JSON.parse(localStorage.getItem(KEY) || '[]');
+      const data = JSON.parse(localStorage.getItem(key) || '[]');
       return Array.isArray(data) ? data.filter(x => x && typeof x.text === 'string' && x.text.trim() && categories.includes(x.category)) : [];
     } catch (_) { return []; }
   }
+  function read() { return readRecords(KEY); }
+  function readDismissed() {
+    try {
+      const data = JSON.parse(localStorage.getItem(DISMISSED_KEY) || '[]');
+      return new Set(Array.isArray(data) ? data.filter(value => typeof value === 'string') : []);
+    } catch (_) { return new Set(); }
+  }
+  function readSaved() {
+    const dismissed = readDismissed();
+    const custom = readRecords(CUSTOM_KEY).filter(item => !dismissed.has(identity(item)));
+    // Una excusa creada y marcada como favorita solo aparece y se cuenta una vez.
+    const unique = new Map();
+    [...read(), ...custom].forEach(item => {
+      const id = identity(item);
+      if (!unique.has(id)) unique.set(id, item);
+    });
+    return [...unique.values()];
+  }
   function write(items) {
-    try { localStorage.setItem(KEY, JSON.stringify(items)); return true; }
+    try { localStorage.setItem(KEY, JSON.stringify(items)); refresh(); return true; }
     catch (_) { notify('No se pudo guardar. Revisa el almacenamiento del navegador.'); return false; }
+  }
+  function removeSaved(item) {
+    const id = identity(item);
+    const favorites = read();
+    const remaining = favorites.filter(favorite => identity(favorite) !== id);
+    // Quitar una excusa de esta vista no borra el original del formulario Crear.
+    if (readRecords(CUSTOM_KEY).some(custom => identity(custom) === id)) {
+      const dismissed = readDismissed();
+      dismissed.add(id);
+      try { localStorage.setItem(DISMISSED_KEY, JSON.stringify([...dismissed])); }
+      catch (_) { notify('No se pudo quitar. Revisa el almacenamiento del navegador.'); return false; }
+    }
+    if (remaining.length === favorites.length) { refresh(); return true; }
+    return write(remaining);
   }
   let timer;
   function notify(message) {
     let node = document.getElementById('favoritesNotice');
     if (!node) {
       node = document.createElement('div'); node.id = 'favoritesNotice'; node.setAttribute('role', 'status');
-      node.style.cssText = 'position:fixed;top:76px;left:50%;transform:translateX(-50%);z-index:1000;background:#332c48;color:white;padding:12px 20px;border-radius:24px;max-width:90vw';
+      node.className = 'favorites-notice';
       document.body.appendChild(node);
     }
     node.hidden = false; node.textContent = message;
@@ -28,7 +64,7 @@
       try { await navigator.clipboard.writeText(text); }
       catch (_) {
         const field = document.createElement('textarea'); field.value = text;
-        field.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(field); field.select();
+        field.className = 'clipboard-field'; document.body.appendChild(field); field.select();
         const ok = document.execCommand('copy'); field.remove(); if (!ok) throw new Error('copy');
       }
       notify('¡Excusa copiada al portapapeles!');
@@ -39,7 +75,7 @@
     if (items.some(x => x.text === item.text && x.category === item.category)) { notify('Esta excusa ya está en tus favoritas.'); return; }
     if (write([{ text: item.text, category: item.category, absurdity: Math.min(5, Math.max(1, Number(item.absurdity) || 5)), savedAt: new Date().toISOString() }, ...items])) notify('¡Excusa guardada en Mis favoritas!');
   }
-  window.ExcusifyFavorites = { read, write, add, copy };
+  window.ExcusifyFavorites = { read, readSaved, write, add, copy, removeSaved };
   const clean = text => text.trim().replace(/^["“]|["”]$/g, '').trim();
   const source = document.getElementById('generatedExcuseText') || document.getElementById('resultText');
   if (source) {
@@ -66,7 +102,7 @@
     }
     new MutationObserver(remember).observe(source, { childList: true, characterData: true, subtree: true });
     const button = document.createElement('button'); button.type = 'button'; button.textContent = '☆ Guardar en favoritas';
-    button.style.cssText = 'background:#e7deff;color:#4c15c8;padding:10px 16px;border:0;border-radius:24px;font:inherit;cursor:pointer;margin-top:12px';
+    button.className = 'save-favorite';
     source.parentElement.appendChild(button);
     button.addEventListener('click', () => {
       const cat = document.getElementById('resultCategoryPill') || document.getElementById('resultCategory');
@@ -74,9 +110,6 @@
       const category = source.dataset.category || categories.find(x => cat && cat.textContent.includes(x)) || 'Vida cotidiana';
       add({ text: clean(source.textContent), category, absurdity: meter ? (meter.textContent.match(/([1-5])\/5/) || [0, 5])[1] : 5 });
     });
-    // Usa la misma copia con detección de errores en las vistas existentes.
-    window.copyGeneratedExcuse = () => copy(clean(source.textContent));
-    window.copyCardText = (_button, text) => copy(text);
   }
   const list = document.getElementById('cardsList');
   if (!list) return;
@@ -86,9 +119,13 @@
   let category = 'Todas', pending = null, trigger = null;
   const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   function render() {
-    const items = read(), query = normalize(search.value.trim());
-    const visible = items.filter(x => (category === 'Todas' || x.category === category) && normalize(x.text).includes(query));
-    document.getElementById('favoritesCount').textContent = `${items.length} excusas listas para la emergencia`;
+    const items = readSaved();
+    const words = normalize(search.value.trim()).split(/\s+/).filter(Boolean);
+    const visible = items.filter(item => (category === 'Todas' || item.category === category)
+      && words.every(word => normalize(item.text).includes(word)));
+    document.getElementById('favoritesCount').textContent = words.length || category !== 'Todas'
+      ? `${visible.length} de ${items.length} excusas guardadas coinciden`
+      : `${items.length} ${items.length === 1 ? 'excusa guardada' : 'excusas guardadas'} para la emergencia`;
     document.querySelectorAll('.filter-pill').forEach(button => {
       const cat = button.dataset.category;
       button.textContent = `${cat} (${items.filter(x => cat === 'Todas' || x.category === cat).length})`;
@@ -107,18 +144,23 @@
       list.appendChild(card);
     });
     const empty = document.getElementById('favoritesEmpty'); empty.hidden = !!visible.length;
-    empty.textContent = items.length ? 'No hay excusas que coincidan con la búsqueda y el filtro.' : 'Aún no tienes favoritas. Genera una excusa y pulsa «Guardar en favoritas».';
+    empty.textContent = items.length ? 'No hay excusas que coincidan con la búsqueda y el filtro.' : 'Aún no tienes excusas guardadas. Crea una excusa o pulsa «Guardar en favoritas» en el generador.';
   }
   document.querySelectorAll('.filter-pill').forEach(button => button.onclick = () => { category = button.dataset.category; render(); });
   search.addEventListener('input', render);
+  search.addEventListener('search', render);
   document.getElementById('clearSearchBtn').onclick = () => { search.value = ''; render(); search.focus(); };
   document.getElementById('cancelRemove').onclick = () => dialog.close();
   dialog.addEventListener('close', () => { if (trigger && trigger.isConnected) trigger.focus(); pending = null; });
   document.getElementById('confirmRemove').onclick = () => {
-    if (pending && write(read().filter(x => x.text !== pending.text || x.category !== pending.category))) {
+    if (pending && removeSaved(pending)) {
       dialog.close(); render(); search.focus(); notify('Excusa eliminada de tus favoritas.');
     }
   };
-  window.addEventListener('storage', event => { if (event.key === KEY || event.key === null) render(); });
+  refresh = render;
+  window.addEventListener('storage', event => {
+    if ([KEY, CUSTOM_KEY, DISMISSED_KEY, null].includes(event.key)) render();
+  });
+  window.addEventListener('pageshow', render);
   render();
 })();
