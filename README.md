@@ -1,5 +1,12 @@
 # practice_stitch_mcp · De Google Stitch a código con OpenCode
 
+## Integrantes
+
+1. Ricardo José Barraza Méndez
+2. Victor Rafael Arévalo Sierra
+3. Ricardo Ernesto Elías Guandique
+4. Michelle Genevieve Gutiérrez Espinoza
+
 Plantilla para la actividad en equipo (1 hora). El plan:
 1. **Diseñen 3 o más vistas** con una temática divertida en [Google Stitch](https://stitch.withgoogle.com).
 2. **Conecten OpenCode con el servidor MCP de Stitch.** Ya viene configurado en [`opencode.json`](opencode.json): **solo falta su clave**.
