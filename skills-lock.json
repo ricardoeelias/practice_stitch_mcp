@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "css-expert": {
+      "source": "rightnow-ai/openfang",
+      "sourceType": "github",
+      "skillPath": "crates/openfang-skills/bundled/css-expert/SKILL.md",
+      "computedHash": "36b6d2641998855df9cc4cdc9c19e83481db716b74a6d246ae3f50dcd216f123"
+    },
+    "css-styling-expert": {
+      "source": "cin12211/orca-q",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/css-expert/SKILL.md",
+      "computedHash": "28ff7750cba870d447e3a99d1b7e4cd653f2d57448fa69c40eab628cbfebd3e7"
+    },
+    "javascript-expert": {
+      "source": "martinholovsky/claude-skills-generator",
+      "sourceType": "github",
+      "skillPath": "skills/javascript-expert/SKILL.md",
+      "computedHash": "8014d0fc69426aa1885e44f366ba9002e1f87f20e2b1d704d5fbeb8993bf9106"
+    },
+    "modern-javascript-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/javascript-typescript/skills/modern-javascript-patterns/SKILL.md",
+      "computedHash": "64ee95d4693e5e3ab29221d2039795a78ba63dca0fff3a4f6840c4335eaa22af"
+    }
+  }
+}
