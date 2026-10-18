@@ -154,7 +154,47 @@ Formato: `tipo(alcance): descripción` (5 a 72 caracteres, en imperativo).
 Ver [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Nuestro proyecto
-> *(El equipo completa esta sección: nombre del equipo, temática, integrantes, enlace al proyecto de Stitch y capturas.)*
+### Excusify · Playful Engine
+
+**Temática:** un generador de pretextos científicamente indemostrables. Excusas absurdas para el trabajo, el estudio y la vida cotidiana, con un "medidor de absurdidad" del 1 al 5.
+
+**Integrantes:** ver la sección [Integrantes](#integrantes) al inicio de este README.
+
+**Proyecto de Stitch:** <https://stitch.google.com/projects/5274829200388109231>
+
+### Vistas
+
+| Vista | Archivo | Qué hace |
+|---|---|---|
+| Portada | [`index.html`](index.html) | Presenta el proyecto, enlaza todas las vistas y resume la paleta. |
+| Inicio - Generador | [`views/inicio-generador.html`](views/inicio-generador.html) | Eliges una categoría y generas una excusa al azar, que puedes guardar en favoritas. |
+| Resultado generado | [`views/resultado-generado.html`](views/resultado-generado.html) | Muestra la excusa con su nivel de absurdidad y opciones para copiarla o compartirla por WhatsApp. |
+| Crear excusa | [`views/crear-excusa.html`](views/crear-excusa.html) | Formulario para añadir tus propias excusas de Trabajo o Estudio y ver las populares de la semana. |
+| Mis favoritas | [`views/mis-favoritas.html`](views/mis-favoritas.html) | Excusas guardadas, con buscador, filtros por categoría y opciones de copiar, compartir y eliminar. |
+
+Los datos (favoritas y excusas creadas) se guardan en el `localStorage` del navegador, sin backend.
+
+### Sistema de diseño
+
+Paleta extraída de Stitch: Electric Violet `#6D45E8`, Sunshine Warm Yellow `#FFB547`, Neon Punch `#FF4B72` y Teal `#00D2B4`, sobre un fondo lila `#F8F7FC`. Tipografía **Plus Jakarta Sans**. Detalle completo en [`docs/DESIGN.md`](docs/DESIGN.md).
+
+### Pruebas
+
+```bash
+node tests/favoritas.test.cjs
+```
+
+Requiere Node.js 16 o superior, porque el test usa módulos con el prefijo `node:`.
+
+### Capturas
+
+| Portada | Inicio - Generador |
+|---|---|
+| ![Portada de Excusify con las tarjetas de las cuatro vistas](docs/img/index.png) | ![Vista Inicio - Generador con el selector de categoría y el botón para inventar una excusa](docs/img/inicio-generador.png) |
+| **Resultado generado** | **Crear excusa** |
+| ![Vista Resultado generado con la excusa y su nivel de absurdidad 5/5](docs/img/resultado-generado.png) | ![Vista Crear excusa con el formulario para aportar una excusa](docs/img/crear-excusa.png) |
+| **Mis favoritas** | |
+| ![Vista Mis favoritas con el buscador y los filtros por categoría](docs/img/mis-favoritas.png) | |
 
 ## Licencia
 [MIT](LICENSE) © 2026 Ronald Mejia
